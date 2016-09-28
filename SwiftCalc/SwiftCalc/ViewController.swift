@@ -12,7 +12,14 @@ class ViewController: UIViewController {
     // MARK: Width and Height of Screen for Layout
     var w: CGFloat!
     var h: CGFloat!
-    
+    var str: String!
+    var calculationString: String!
+    var intResult: Int!
+    var a: Int!
+    var b: Int!
+    var numbers: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    var dividers: [Int] = []
+    var marker: Int!
 
     // IMPORTANT: Do NOT modify the name or class of resultLabel.
     //            We will be using the result label to run autograded tests.
@@ -36,6 +43,12 @@ class ViewController: UIViewController {
         resultLabel.accessibilityValue = "resultLabel"
         makeButtons()
         // Do any additional setup here.
+        str = ""
+        calculationString = ""
+        intResult = 0
+        a = 0
+        b = 0
+        marker = 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,7 +65,8 @@ class ViewController: UIViewController {
     // TODO: Ensure that resultLabel gets updated.
     //       Modify this one or create your own.
     func updateResultLabel(_ content: String) {
-        print("Update me like one of those PCs")
+        print("Update result label")
+        resultLabel.text = content
     }
     
     
@@ -66,31 +80,93 @@ class ViewController: UIViewController {
     //       Modify this one or create your own.
     func intCalculate(a: Int, b:Int, operation: String) -> Int {
         print("Calculation requested for \(a) \(operation) \(b)")
-        return 0
+        if operation == "+" {
+            intResult = a + b
+        } else if operation == "-" {
+            intResult = a - b
+        } else if operation == "*" {
+            intResult = a * b
+        } else if operation == "*" {
+            intResult = a / b
+        }
+        return intResult
     }
     
     // TODO: A general calculate method for doubles
     //       Modify this one or create your own.
     func calculate(a: String, b:String, operation: String) -> Double {
         print("Calculation requested for \(a) \(operation) \(b)")
-        return 0.0
+        return Double(1)
     }
     
     // REQUIRED: The responder to a number button being pressed.
     func numberPressed(_ sender: CustomButton) {
         guard Int(sender.content) != nil else { return }
-        print("The number \(sender.content) was pressed")
+//        print("The number \(sender.content) was pressed in number pressed")
         // Fill me in!
+        str = ""
+        someDataStructure += [sender.currentTitle!]
+        for i in someDataStructure {
+            str = str + i
+            updateResultLabel(str)
+        }
+//        print("after update func in numberPressed")
     }
     
     // REQUIRED: The responder to an operator button being pressed.
     func operatorPressed(_ sender: CustomButton) {
         // Fill me in!
+//        print("The operator \(sender.content) was pressed in operator pressed")
+        str = ""
+        if (sender.titleLabel?.text != "C" && sender.titleLabel?.text != "=") {
+            someDataStructure += [sender.currentTitle!]
+            for i in someDataStructure {
+                str = str + i
+                updateResultLabel(str)
+//                print("after update func in operatorPressed")
+            }
+        } else if sender.titleLabel?.text == "C"{
+            someDataStructure = []
+            updateResultLabel("0")
+        } else if sender.titleLabel?.text == "="{ //equals case
+//            for i in someDataStructure {
+//                let num = Int(i)
+////                if numbers.contains(num!) {
+////                    //num
+////                    str += i
+////                } else {
+////                    //operator
+////                    
+////                    
+////                }
+//                if !numbers.contains(num!) {
+//                    dividers.append(num!)
+//                }
+//            }
+//            
+//            for d in dividers {
+//                while marker < d {
+//                    str = str + someDataStructure[marker]
+//                    marker = marker + 1
+//                }
+//                
+//            }
+            
+        }
+        marker = marker + 1
     }
     
     // REQUIRED: The responder to a number or operator button being pressed.
     func buttonPressed(_ sender: CustomButton) {
        // Fill me in!
+        print("The thing \(sender.content) was pressed in buttonPressed")
+        str = ""
+        someDataStructure += [sender.currentTitle!]
+        for i in someDataStructure {
+            str = str + i
+            updateResultLabel(str)
+        }
+        print("after update func in buttonPressed")
     }
     
     // IMPORTANT: Do NOT change any of the code below.
@@ -108,12 +184,12 @@ class ViewController: UIViewController {
         let displayContainer = UIView()
         view.addUIElement(displayContainer, frame: CGRect(x: 0, y: 0, width: w, height: 160)) { element in
             guard let container = element as? UIView else { return }
-            container.backgroundColor = UIColor.black
+            container.backgroundColor = UIColor(red: 7/255, green: 54/255, blue: 66/255, alpha: 1.0)
         }
         displayContainer.addUIElement(resultLabel, text: "0", frame: CGRect(x: 70, y: 70, width: w-70, height: 90)) {
             element in
             guard let label = element as? UILabel else { return }
-            label.textColor = UIColor.white
+            label.textColor = UIColor(red: 238/255, green: 232/255, blue: 213/255, alpha: 1.0)
             label.font = UIFont(name: label.font.fontName, size: 60)
             label.textAlignment = NSTextAlignment.right
         }
@@ -121,7 +197,7 @@ class ViewController: UIViewController {
         let calcContainer = UIView()
         view.addUIElement(calcContainer, frame: CGRect(x: 0, y: 160, width: w, height: h-160)) { element in
             guard let container = element as? UIView else { return }
-            container.backgroundColor = UIColor.black
+            container.backgroundColor = UIColor(red: 238/255, green: 232/255, blue: 213/255, alpha: 1.0)
         }
 
         let margin: CGFloat = 1.0
@@ -135,6 +211,9 @@ class ViewController: UIViewController {
             calcContainer.addUIElement(CustomButton(content: el), text: el,
             frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonHeight)) { element in
                 guard let button = element as? UIButton else { return }
+                button.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
+                button.setTitleColor(UIColor(red: 238/255, green: 232/255, blue: 213/255, alpha: 1.0), for: .normal)
+                button.backgroundColor = UIColor(red: 38/255, green: 139/255, blue: 210/255, alpha: 1.0)
                 button.addTarget(self, action: #selector(operatorPressed), for: .touchUpInside)
             }
         }
@@ -145,6 +224,9 @@ class ViewController: UIViewController {
             calcContainer.addUIElement(CustomButton(content: digit), text: digit,
             frame: CGRect(x: x, y: y+101.0, width: buttonWidth, height: buttonHeight)) { element in
                 guard let button = element as? UIButton else { return }
+                button.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
+                button.setTitleColor(UIColor(red: 238/255, green: 232/255, blue: 213/255, alpha: 1.0), for: .normal)
+                button.backgroundColor = UIColor(red: 0, green: 43/255, blue: 54/255, alpha: 1.0)
                 button.addTarget(self, action: #selector(numberPressed), for: .touchUpInside)
             }
         }
@@ -155,9 +237,13 @@ class ViewController: UIViewController {
             calcContainer.addUIElement(CustomButton(content: el), text: el,
             frame: CGRect(x: x, y: y, width: buttonWidth, height: buttonHeight)) { element in
                 guard let button = element as? UIButton else { return }
-                button.backgroundColor = UIColor.orange
-                button.setTitleColor(UIColor.white, for: .normal)
+                button.backgroundColor = UIColor(red: 42/255, green: 161/255, blue: 152/255, alpha: 1.0)
+                button.setTitleColor(UIColor(red: 238/255, green: 232/255, blue: 213/255, alpha: 1.0), for: .normal)
+                button.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
                 button.addTarget(self, action: #selector(operatorPressed), for: .touchUpInside)
+                if button.titleLabel?.text == "=" {
+                    button.backgroundColor = UIColor(red: 101/255, green: 123/255, blue: 131/255, alpha: 1.0)
+                }
             }
         }
         // MARK: Last Row for big 0 and .
@@ -167,6 +253,8 @@ class ViewController: UIViewController {
             calcContainer.addUIElement(CustomButton(content: el), text: el,
             frame: CGRect(x: x, y: 405, width: myWidth, height: buttonHeight)) { element in
                 guard let button = element as? UIButton else { return }
+                button.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
+                button.backgroundColor = UIColor(red: 0, green: 43/255, blue: 54/255, alpha: 1.0)
                 button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             }
         }

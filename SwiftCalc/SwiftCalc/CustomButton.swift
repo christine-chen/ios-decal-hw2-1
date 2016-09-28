@@ -14,22 +14,26 @@ class CustomButton: UIButton {
     convenience init(content: String? = "") {
         self.init(frame: .zero)
         self.content = content!
+//        self.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
     }
     override init(frame: CGRect) {
         self.content = ""
         super.init(frame: frame)
         // Do any additional setup here.
+//        self.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
     }
     
     // TODO: Custom Button Behavior for Styling
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Add any code for customization.
         super.touchesBegan(touches, with: event)
+//        self.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
     }
     // TODO: Custom Button Behavior for Styling
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Add any code for customization.
         super.touchesEnded(touches, with: event)
+//        self.titleLabel?.font = UIFont(name: "Helvetica", size: 25)
     }
     // MARK: Required inits are required
     required init?(coder aDecoder: NSCoder) {

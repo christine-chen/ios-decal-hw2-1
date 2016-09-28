@@ -20,10 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nav = UINavigationController()
         
         // MARK: Style Navigation Bar
-        nav.navigationBar.barTintColor = UIColor(rgb: 0x3e7aab)
-        nav.navigationBar.tintColor = UIColor.white
+        nav.navigationBar.tintColor = UIColor(red: 0.0, green: 43/255, blue: 54/255, alpha: 1.0)
+        nav.navigationBar.barTintColor = UIColor(red: 0.0, green: 43/255, blue: 54/255, alpha: 1.0)
         let navigationBarAppearace = UINavigationBar.appearance()
-        let font = UIFont(name: "Helvetica-Bold", size: 16)
+        let font = UIFont(name: "Helvetica", size: 18)
         if let font = font {
             navigationBarAppearace.titleTextAttributes = [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor.white];
         }
